@@ -1444,7 +1444,7 @@ pre code {
 
 /* LAYOUT CSS */
 .cover {
-  background-color: #f5f5f5;
+  background-color: #ddd;
   position: fixed;
   text-align: center;
   width: 100%;

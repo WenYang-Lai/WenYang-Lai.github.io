@@ -197,7 +197,7 @@ When we create a <code>normal_chk</code> it will overlap with <code>normal_chk.w
 
 <p>Next, look into <code>localtime()</code> in glibc</p>
 
-<p>localtime() -&gt; __tz_convert() -&gt; tzset_internal() -&gt; tzset_internal() -&gt; __tzfile_read()</p>
+<p><code>localtime() -&gt; __tz_convert() -&gt; tzset_internal() -&gt; tzset_internal() -&gt; __tzfile_read()</code></p>
 
 <p>It will read the TZ file content into heap by access <code>TZ</code> and <code>TZDIR</code> environment variables.
 So, make <code>TZDIR=/home/critical_heap++</code> and <code>TZ=flag</code>

